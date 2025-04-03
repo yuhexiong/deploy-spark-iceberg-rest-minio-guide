@@ -10,8 +10,27 @@ Provides a deployment guide for Spark + Iceberg REST + MinIO, integrating Apache
 - Compute Engine: Spark v3.5.2
 - Database: Doris v2.1.1.8
 
-## Run
+## Architecture
 
+### 1️. Compute Layer: Spark-Iceberg  
+  - Responsible for handling queries and data operations  
+  - Relies on Iceberg REST for metadata management  
+  - Reads and writes data to MinIO storage  
+
+### 2️. Service Layer: Iceberg REST  
+  - Manages metadata for Iceberg tables  
+  - Interacts with MinIO to store Iceberg data  
+
+### 3️. Storage Layer: MinIO  
+  - Object storage (similar to S3)  
+  - Stores Iceberg data and metadata  
+
+### 4️. Physical Storage Layer: Disk/Cloud Storage  
+  - The final location where data is stored  
+  - MinIO reads and writes data through Volumes
+
+
+## Run
 
 ### Run
 ```bash
@@ -103,7 +122,7 @@ SELECT * FROM iceberg_catalog.nyc.taxis;
 ### Move Data
 Move the Doris table to [catalog].[database].[new_table_name] without pre-creating the schema.
 ```sql
-CREATE TABLE iceberg_catalog.nyc.abc AS SELECT * FROM test.abc;
+CREATE TABLE iceberg_catalog.database.table AS SELECT * FROM database.table;
 ```
 
 
