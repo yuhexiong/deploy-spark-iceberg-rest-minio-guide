@@ -12,20 +12,20 @@
 
 ## Architecture
 
-### 1️) Compute Layer: Spark-Iceberg  
+### First Layer: Compute Layer - Spark-Iceberg  
   - 負責處理查詢與資料操作  
   - 仰賴 Iceberg REST 進行中繼資料管理  
   - 讀寫 MinIO 儲存的資料  
 
-### 2️) Service Layer: Iceberg REST  
+### Second Layer: Service Layer - Iceberg REST  
   - 管理 Iceberg 資料表的中繼資料  
   - 與 MinIO 互動以儲存 Iceberg 的資料  
 
-### 3️) Storage Layer: MinIO  
+### Third Layer: Storage Layer - MinIO  
   - 類似 S3 的物件儲存服務  
   - 儲存 Iceberg 的資料與中繼資料  
 
-### 4️) Physical Storage Layer: Disk/Cloud Storage  
+### Fourth Layer: Physical Storage Layer - Disk/Cloud 
   - 最終資料儲存位置  
   - MinIO 透過 Volume 存取實體儲存空間  
 
