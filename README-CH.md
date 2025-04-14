@@ -1,36 +1,33 @@
 # Deploy Spark Iceberg REST MinIO Guide
 
-**(also provided Traditional Chinese version document [README-CH.md](README-CH.md).)**
+建構 Lakehouse 架構，透過 Iceberg 提供強大的 schema 演進、ACID 交易、時間旅行以及多引擎相容性，讓資料湖具備資料倉儲等級的管理與查詢能力。
 
-
-Build a Lakehouse architecture with Iceberg, which provides powerful schema evolution, ACID transactions, time travel, and multi-engine compatibility, enabling the data lake to have data warehouse-level management and query capabilities.  
-
-Provides a deployment guide for Spark + Iceberg REST + MinIO, integrating Apache Doris, covering setup, SQL operations, and schema-free data migration.  
+本指南提供 Spark + Iceberg REST + MinIO 的部署方式，並整合 Apache Doris，涵蓋環境設定、SQL 操作與無需 Schema 的資料搬移功能。
 
 
 ## Overview
-- Table Format: Iceberg v1.8.1
-- Compute Engine: Spark v3.5.2
-- Database: Doris v2.1.1.8
+- 表格格式：Iceberg v1.8.1  
+- 計算引擎：Spark v3.5.2  
+- 資料庫：Doris v2.1.1.8  
 
 ## Architecture
 
 ### 1️. Compute Layer: Spark-Iceberg  
-  - Responsible for handling queries and data operations  
-  - Relies on Iceberg REST for metadata management  
-  - Reads and writes data to MinIO storage  
+  - 負責處理查詢與資料操作  
+  - 仰賴 Iceberg REST 進行中繼資料管理  
+  - 讀寫 MinIO 儲存的資料  
 
 ### 2️. Service Layer: Iceberg REST  
-  - Manages metadata for Iceberg tables  
-  - Interacts with MinIO to store Iceberg data  
+  - 管理 Iceberg 資料表的中繼資料  
+  - 與 MinIO 互動以儲存 Iceberg 的資料  
 
 ### 3️. Storage Layer: MinIO  
-  - Object storage (similar to S3)  
-  - Stores Iceberg data and metadata  
+  - 類似 S3 的物件儲存服務  
+  - 儲存 Iceberg 的資料與中繼資料  
 
 ### 4️. Physical Storage Layer: Disk/Cloud Storage  
-  - The final location where data is stored  
-  - MinIO reads and writes data through Volumes
+  - 最終資料儲存位置  
+  - MinIO 透過 Volume 存取實體儲存空間  
 
 
 ## Run
@@ -92,7 +89,7 @@ DROP CATALOG IF EXISTS iceberg_catalog;
 ```
 
 ### Create Catalog
-`aws.region` is invalid parameter.
+`aws.region` 是無效參數。
 
 ```sql
 CREATE CATALOG iceberg_catalog
@@ -123,7 +120,7 @@ SELECT * FROM iceberg_catalog.nyc.taxis;
 ```
 
 ### Move Data
-Move the Doris table to [catalog].[database].[new_table_name] without pre-creating the schema.
+將 Doris 的資料表搬移到 [catalog].[database].[new_table_name]，無需預先建立 Schema。
 ```sql
 CREATE TABLE iceberg_catalog.database.table AS SELECT * FROM database.table;
 ```
@@ -134,3 +131,5 @@ CREATE TABLE iceberg_catalog.database.table AS SELECT * FROM database.table;
 - [Apache Iceberg](https://iceberg.apache.org/spark-quickstart/#docker-compose)  
 - [Apache Doris -  Repository](https://doris.apache.org/docs/3.0/sql-manual/sql-statements/data-modification/backup-and-restore/CREATE-REPOSITORY#examples) 
 - [Apache Doris - Iceberg](https://doris.apache.org/docs/lakehouse/lakehouse-best-practices/doris-iceberg)
+
+
