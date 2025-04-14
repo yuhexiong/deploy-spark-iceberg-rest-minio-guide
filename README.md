@@ -15,20 +15,20 @@ Provides a deployment guide for Spark + Iceberg REST + MinIO, integrating Apache
 
 ## Architecture
 
-### 1\. Compute Layer: Spark-Iceberg  
+### 1) Compute Layer: Spark-Iceberg  
   - Responsible for handling queries and data operations  
   - Relies on Iceberg REST for metadata management  
   - Reads and writes data to MinIO storage  
 
-### 2️\. Service Layer: Iceberg REST  
+### 2️) Service Layer: Iceberg REST  
   - Manages metadata for Iceberg tables  
   - Interacts with MinIO to store Iceberg data  
 
-### 3️\. Storage Layer: MinIO  
+### 3️) Storage Layer: MinIO  
   - Object storage (similar to S3)  
   - Stores Iceberg data and metadata  
 
-### 4️\. Physical Storage Layer: Disk/Cloud Storage  
+### 4️) Physical Storage Layer: Disk/Cloud Storage  
   - The final location where data is stored  
   - MinIO reads and writes data through Volumes
 
